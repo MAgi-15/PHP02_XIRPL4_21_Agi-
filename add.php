@@ -1,0 +1,84 @@
+<?php
+    include 'koneksi.php';
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Aplikasi CRUD BUKU</title>
+</head>
+<body>
+    <div class="w-50 mx-auto border p-3 mt-5">
+        <a href="index.php">Kembali ke home</a>
+    <form action="add.php" method="post">
+        <label for="id_siswa">Id Siswa</label>
+        <input type="text" id="id_siswa" name ="id_siswa" class="form-control" required>
+
+        <label for="id_siswa">Nis</label>
+        <input type="text" id="nis" name ="nis" class="form-control" required>
+
+        <label for="id_siswa">Nama Siswa</label>
+        <input type="text" id="nama_siswa" name ="nama_siswa" class="form-control" required>
+
+        <label for="jenis_kelamin">Jenis Kelamin</label>
+        <input type="text" id="jenis_kelamin" name ="jenis_kelamin" class="form-control" required>
+
+        <label for="id_siswa">Alamat</label>
+        <input type="text" id="alamat" name ="alamat" class="form-control" required>
+
+        <label for="id_siswa">Id Jurusan</label>
+        <input type="text" id="id_jurusan" name ="id_jurusan" class="form-control" required>
+
+        <label for="nama_jurusan">Nama Jurusan</label>
+        <select name="nama_jurusan" id="nama_jurusan" class="form-select" required>
+            <option >Pilih Jurusan</option>
+            <option value="RPL">RPL</option>
+            <option value="TKJ">TKJ</option>
+            <option value="TJA">TJA</option>
+        </select>
+
+        <input class="btn btn-success mt-3" type="submit" name="tambah" value="Tambah Data">
+    </form>    
+    </div>
+
+    <?php
+
+        if(isset($_POST['tambah'])) {
+
+            $id_siswa= $_POST['id_siswa'];
+            $nis= $_POST['nis'];
+            $nama_siswa= $_POST['nama_siswa'];
+            $jenis_kelamin= $_POST['jenis_kelamin'];
+            $alamat= $_POST['alamat'];
+            $id_jurusan= $_POST['id_jurusan'];
+            $nama_jurusan= $_POST['nama_jurusan'];    
+
+            $sqlGet = "SELECT * FROM buku WHERE id_siswa='$id_siswa'";
+            $queryGet = mysqli_query($conn, $sqlGet);
+            $cek = mysqli_num_rows($queryGet);
+
+            $sqlInsert = "INSERT INTO buku(id_siswa,nis,nama_siswa,jenis_kelamin,alamat,id_jurusan,nama_jurusan)
+                          VALUES ('$id_siswa','$nis','$nama_siswa','$jenis_kelamin','$alamat','$id_jurusan','$nama_jurusan')";
+
+            $queryInsert = mysqli_query($conn, $sqlInsert);
+
+            if(isset($sqlInsert) && $cek <= 0) {
+                echo "
+                <div class='alert alert-success'>Data berhasil ditambahkan <a href='index.php'>Lihat data</div>
+                ";
+            } else if ($cek >= 1) {
+                echo"
+                <div class='alert alert-danger'>Data gagal ditambahkan <a href='index.php'>Lihat data</div>
+                ";
+            }
+
+            header("localhost: indecx:html");
+        }
+    ?>    
+    
+</body>
+</html>
